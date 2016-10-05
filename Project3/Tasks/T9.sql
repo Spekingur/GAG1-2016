@@ -15,7 +15,7 @@ $$
 begin
 	if iAmount = 0 then		-- making sure you don't transfer zero money
 		raise exception 'Can not transfer no money';
-	elsif iAmount < 0 then		-- making sure you don't transfer minus money
+	elsif iAmount < 0 then		-- making sure you don't transfer minus money (a reverse transfer)
 		raise exception 'Can not transfer minus money';
 	elsif iAmount > 0 then
 		/* Should be no need to make other checks since trigger from #5 should take care of checking if
