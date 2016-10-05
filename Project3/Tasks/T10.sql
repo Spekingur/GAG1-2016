@@ -1,1 +1,26 @@
+/* Task 10 
+ * Function LoanMoney takes in three parameters - iAID, iAmount and iDueDate.
+ * The procedure should give the account a loan of iAmount and also create a bill with the same iAmount and due date
+ * of iDueDate. No return value.
+ */
 
+create or replace function LoanMoney (
+	IN iAID int,
+	IN iAmount int,
+	IN iDueDate date)
+returns void
+as
+$$
+declare
+	billPID int;
+begin
+	insert into AccountRecords (AID, rDate, rType, rAmount)		-- no insert of balance since we assume that trigger from #5 will add it up for us
+	values (iAID, current_date, 'L', iAmount);
+
+	billPID := (select PID from Accounts where AID = iAID);		-- getting the PID for the account in question so we know who get the bill
+	
+	insert into Bills (PID, bDueDate, bAmount, bIsPaid)		-- trigger from #4 should check if this insert is okay
+	values (billPID, iDueDate, iAmount, false);
+end;
+$$
+language 'plpgsql';
