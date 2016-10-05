@@ -19,9 +19,12 @@ begin
 
 	nAID := lastval();					-- get the value of unique ID from trigger
 
-	update Accounts						-- should we insert through AccountRecords using trigger from #5?
-	set aBalance = iAmount					-- changes value from 0 to iAmount
-	where AID = nAID;					-- assumes that there's only one ID of this type at the current time
+	/* update Accounts						-- should we insert through AccountRecords using trigger from #5?
+	set aBalance = iAmount					-- changes value from 0 to iAmount (because there isn't any money in it yet)
+	where AID = nAID; */					-- assumes that there's only one ID of this type at the current time
+	
+	insert into AccountRecords (AID, rDate, rType, rAmount)	-- balance is not specified because trigger from #5 should take care of adding things up
+	values (nAID, current_date, 'O', iAmount);		-- uses type (O)ther because this is not a (B)ill, (T)ransfer or (L)oan
 end;
 $$
 language 'plpgsql';
