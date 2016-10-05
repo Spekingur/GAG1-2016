@@ -1,0 +1,155 @@
+1:
+
+SELECT *
+FROM AllAccountRecords			--Simple check if all columns expect for the AccountRecords.aid column are shown
+
+SELECT *
+FROM AllAccountRecords
+WHERE rid IS NULL;			--Checks if accounts with no entry in AccountRecords show NULL in columns for AccountRecords
+
+
+2:
+
+SELECT *
+FROM DebtorStatus			--Simple check if the right columns are shown(pid, pName, aBalance, aOver)
+
+SELECT *
+FROM DebtorStatus
+WHERE abalance > 0			--Checks if only accounts with total balance of less than 0 are shown
+
+
+3:
+
+SELECT *
+FROM FinancialStatus			--Simple check if the right columns are shown(pid, pName, total, unpaid)
+
+SELECT DISTINCT COUNT(*)
+FROM FinancialStatus			--Checks if there are no duplicates(all the accounts are added for each person) thus 'DISTINCT' should have no effect on the count
+
+
+4:
+
+BEGIN;
+
+UPDATE bills
+SET bamount = 1000000			--Checks if the trigger 'CheckBills' is working properly by declining updates on bills table(expect for bIsPaid field)
+WHERE bid = 1;
+
+ROLLBACK;
+END;
+
+BEGIN;
+
+UPDATE bills
+SET bispaid = false			--Checks if the trigger 'CheckBills' allows updating of the field 'bIsPaid' so that bills can be paid(Function #8)
+WHERE bid = 1;
+
+ROLLBACK;
+END;
+
+BEGIN;
+
+DELETE FROM bills			--Checks if the trigger 'CheckBills' aborts any attempts of deleting from the bills table
+WHERE bid = 1;
+
+ROLLBACK;
+END;
+
+BEGIN;
+
+INSERT INTO bills (pid, bduedate, bamount, bispaid)	--Checks if the trigger 'CheckBills' doesnt allow creating loans with a negative amount value
+VALUES (59, '20161124', -5000, false);
+
+ROLLBACK;
+END;
+
+BEGIN;
+
+INSERT INTO bills (pid, bduedate, bamount, bispaid)	--Checks if the trigger 'CheckBills' does allow creating loans with a positive amount value
+VALUES (59, '20161124', 7000, false);
+
+ROLLBACK;
+END;
+
+BEGIN;
+
+INSERT INTO bills (pid, bduedate, bamount, bispaid)	--Checks if the trigger 'CheckBills' doesnt allow creating bills with a due date in the past
+VALUES (59, '20150101', 1000, false);
+
+ROLLBACK;
+END;
+
+
+5:
+
+BEGIN;
+
+UPDATE accountrecords
+SET ramount = 10000000			--Checks if the trigger 'accountrecords' doesnt allow updating of the accountrecords table
+WHERE rid = 1;
+
+ROLLBACK;
+END;
+
+BEGIN;
+
+DELETE FROM accountrecords		--Checks if the trigger 'accountrecords' doesnt allow deleting from the accountrecords table
+WHERE rid = 1;
+
+ROLLBACK;
+END;
+
+BEGIN;
+
+INSERT INTO accountrecords (aid, rtype, ramount)	--Checks if the trigger 'accountrecords' does not allow for withdrawals 							
+VALUES (12, 'O', -10000000)				--bigger than the money available on a persons account(plus the overdraft)
+
+ROLLBACK;
+END;
+
+BEGIN;
+
+INSERT INTO accountrecords (aid, rtype, ramount)	--Checks if the trigger 'accountrecords' properly updates the account in							
+VALUES (12, 'O', 1000000);				--the 'accounts' table upon creation of a new account record
+SELECT *
+FROM accounts
+WHERE aid = 12;
+
+ROLLBACK;
+END;
+
+BEGIN;
+
+INSERT INTO accountrecords (aid, rtype, ramount)	--Checks if the trigger 'accountrecords' properly installs the correct balance							
+VALUES (12, 'O', 1000000);				--into the 'accountrecords' table(the most recent record should have a rbalance of
+SELECT *						--almost a 1 million)
+from accountrecords
+where aid = 12
+
+ROLLBACK;
+END;
+
+
+6:
+
+BEGIN;
+
+INSERT INTO people (pid, pname, pgender, pheight)	--Checks if the trigger 'NewPerson' creates a new account in the 'accounts' table
+VALUES (250, 'testName', 'F', 1.99);			--for a new person inserted into the 'people' table with a pid = 250.
+SELECT *						
+FROM accounts
+WHERE pid = 250
+
+ROLLBACK;
+END;
+
+BEGIN;
+
+INSERT INTO people (pid, pname, pgender, pheight)	--Checks if the trigger 'NewPerson' creates a new account in the 'accounts' table
+VALUES (250, 'testName', 'F', 1.99);			--and properly sets up an overdraft of a '10000' for it upon creation of a new person
+SELECT *						--in the 'people' table
+FROM accounts
+WHERE pid = 250 AND aover = 10000
+
+ROLLBACK;
+END;
