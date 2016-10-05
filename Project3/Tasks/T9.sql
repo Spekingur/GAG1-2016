@@ -6,18 +6,18 @@
  */
 
  create or replace function Transfer (
-	IN iToAID,
-	IN iFromAID,
-	IN iAmount)
+	IN iToAID int,
+	IN iFromAID int,
+	IN iAmount int)
 returns void
 as
 $$
 begin
-	if iAmount = 0			-- making sure you don't transfer zero money
+	if iAmount = 0 then		-- making sure you don't transfer zero money
 		raise exception 'Can not transfer no money';
-	elsif iAmount < 0		-- making sure you don't transfer minus money
+	elsif iAmount < 0 then		-- making sure you don't transfer minus money
 		raise exception 'Can not transfer minus money';
-	elsif iAmount > 0
+	elsif iAmount > 0 then
 		/* Should be no need to make other checks since trigger from #5 should take care of checking if
 		   iAmount is more than exists on given iFromAID account. */
 		insert into AccountRecords (AID, rDate, rType, rAmount)		-- We don't insert balance because trigger #5 finds the balance and inserts it
