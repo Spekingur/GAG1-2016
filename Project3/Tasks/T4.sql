@@ -9,8 +9,17 @@ CREATE OR REPLACE FUNCTION CheckBills() RETURNS trigger AS $bills_check$
         RETURN NEW;
         
         ELSIF (TG_OP = 'UPDATE') THEN
-            RAISE EXCEPTION 'Its not allowed to update bills!';
-            
+		IF NEW.bid != OLD.bid THEN
+			RAISE EXCEPTION 'Its not allowed to update bills!';
+		ELSIF NEW.pid != OLD.pid THEN
+			RAISE EXCEPTION 'Its not allowed to update bills!';
+		ELSIF NEW.bduedate != OLD.bduedate THEN
+			RAISE EXCEPTION 'Its not allowed to update bills!';
+		ELSIF NEW.bamount != OLD.bamount THEN
+			RAISE EXCEPTION 'Its not allowed to update bills!';
+		END IF;
+	RETURN NEW;
+		
         ELSIF (TG_OP = 'DELETE') THEN
             RAISE EXCEPTION 'Its not allowed to delete bills!';
         END IF;
