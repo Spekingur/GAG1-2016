@@ -177,6 +177,37 @@ WHERE abalance = 1000000
 ROLLBACK;
 END;
 
+8:
+BEGIN;
+
+SELECT bIsPaid from Bills where BID = 19;         -- Should return false, bill has not yet been paid.
+SELECT PayOneBill(19);                            -- Checking if able to pay bill where there is enough money on the account.
+SELECT bIsPaid from Bills where BID = 19;         -- Should return true after payment.
+
+ROLLBACK;
+END;
+
+BEGIN;
+SELECT bIsPaid from Bills where BID = 15;         -- Should return true, bill has been paid.
+SELECT PayOneBill(15);                            -- Should return an exception that the bill has already been paid.
+
+ROLLBACK;
+END;
+
+BEGIN;
+SELECT bIsPaid from Bills where BID = 16;          -- Should return false, bill has not been paid
+SELECT AID from Accounts where PID = 54;           -- PID of bill, does not have any accounts
+SELECT PayOneBill(16);                             -- Should return an exception that an account does not exist
+
+ROLLBACK;
+END;
+
+BEGIN;
+SELECT bIsPaid FROM Bills WHERE BID = 59;          -- Should return false, bill has not been paid
+SELECT PayOneBill(59);                             -- Should return an exception that there is not enough money on the account
+
+ROLLBACK;
+END;
 
 9:
 
