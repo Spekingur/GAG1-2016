@@ -11,9 +11,9 @@ returns void
 as
 $$
 declare
-  billPID int;
+  	billPID int;
 	AIDtoBill int;
-	numOfAID int;
+	--numOfAID int;
 	acntAmount int;
 	billAmount int;
 begin
@@ -23,20 +23,30 @@ begin
 	-- then we need to check if the amount on the bill is less or equal to the one on account
 	-- if so then 
 	billPID := (select PID from Bills where BID = iBID);	-- Person ID to find person's accounts
-	acntAmount := select MAX(ACT.balance) from (select AID, SUM(aBalance + aOver) as balance from Accounts where PID = billPID group by AID) as ACT;
-	AIDtoBill := (select AID, SUM(aBalance + aOver) as balance from Accounts where PID = billPID);
+	
+	acntAmount := select MAX(ACT.balance) from (
+			select AID, SUM(aBalance + aOver) as balance 
+			from Accounts 
+			where PID = billPID 
+			group by AID) as ACT;	 -- finding the highest amount an person's account has
+	
+	AIDtoBill := (select AID, SUM(aBalance + aOver) as balance from Accounts where PID = billPID);	-- does not work
+	
 	billAmount := (select bAmount from Bills where BID = iBID);
 	--numOfAID := (select count(*) from billNUM);
-
-	--(b) take money off account through AccountRecords
-	insert into AccountRecords (AID, rDate, rType, rAmount)
-	values (AIDtoBill, current_date, 'B', -billAmount);
 	
-	--(c) change bill to true for bIsPaid in Bills
-	update Bills
-	set bIsPaid = true
-	where BID = iBID;
+	if billAmount <= acntAmount THEN
+		--(b) take money off account through AccountRecords
+		insert into AccountRecords (AID, rDate, rType, rAmount)
+		values (AIDtoBill, current_date, 'B', -billAmount);
 	
+		--(c) change bill to true for bIsPaid in Bills
+		update Bills
+		set bIsPaid = true
+		where BID = iBID;
+	else
+		raise exception 'Not enough money on account';
+	end if;	
 end;
 $$
 language 'plpgsql';
