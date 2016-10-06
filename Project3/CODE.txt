@@ -169,6 +169,7 @@ declare
 	AIDtoBill int;
 	acntAmount int;
 	billAmount int;
+	billPaid boolean;
 begin
 	-- Person ID to find person's accounts
 	billPID := (select PID from Bills where BID = iBID);
@@ -183,22 +184,29 @@ begin
 
 	-- the money amount on a bill
 	billAmount := (select bAmount from Bills where BID = iBID);
-
-	-- making sure only to try payment when account has enough money for bill (tvíverknaður út af trigger úr no 5?)
-	if billAmount <= acntAmount THEN
 	
-		-- take money off account through AccountRecords
-		insert into AccountRecords (AID, rDate, rType, rAmount)
-		values (AIDtoBill, current_date, 'B', -billAmount);
+	-- to check whether bill is paid or nott
+	billPaid := (select bIsPaid from Bills where BID = iBID);
 	
-		-- change bill to true for bIsPaid in Bills
-		update Bills
-		set bIsPaid = true
-		where BID = iBID;
+	-- making sure only pay bills that haven't been paid
+	if billPaid = false THEN
+		-- making sure only to try payment when account has enough money for bill (tvíverknaður út af trigger úr no 5?)
+		if billAmount <= acntAmount THEN
+	
+			-- take money off account through AccountRecords
+			insert into AccountRecords (AID, rDate, rType, rAmount)
+			values (AIDtoBill, current_date, 'B', -billAmount);
+	
+			-- change bill to true for bIsPaid in Bills
+			update Bills
+			set bIsPaid = true
+			where BID = iBID;
+		else
+			raise exception 'Not enough money on account';
+		end if;
 	else
-		raise exception 'Not enough money on account';
-	end if;
-	
+		raise exception 'Bill has already been paid';
+	end if;	
 end;
 $$
 language 'plpgsql';
