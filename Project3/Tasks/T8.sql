@@ -1,1 +1,42 @@
+/* Task 8 
+ * Function PayOneBill takes in iBID as bill ID of bill to be paid. The function pays the bill.
+ * Payment should come from the account with the highest balance (amount + overdraft) of a person's account.
+ * If 2+ accounts with same amount + overdraft either can be chosen.
+ * Uses trigger #5. If insufficient funds in a single account to pay the bill the operation/transaction should
+ * be aborted. No return value.
+ */
 
+create or replace function PayOneBill (IN iBID int)
+returns void
+as
+$$
+declare
+  billPID int;
+	AIDtoBill int;
+	numOfAID int;
+	acntAmount int;
+	billAmount int;
+begin
+	-- what do we need? we need the AID and we need the amount on the account
+	-- we need to know the PID to check the accounts
+	-- we need to know what account to select
+	-- then we need to check if the amount on the bill is less or equal to the one on account
+	-- if so then 
+	billPID := (select PID from Bills where BID = iBID);	-- Person ID to find person's accounts
+	acntAmount := select MAX(ACT.balance) from (select AID, SUM(aBalance + aOver) as balance from Accounts where PID = billPID group by AID) as ACT;
+	AIDtoBill := (select AID, SUM(aBalance + aOver) as balance from Accounts where PID = billPID);
+	billAmount := (select bAmount from Bills where BID = iBID);
+	--numOfAID := (select count(*) from billNUM);
+
+	--(b) take money off account through AccountRecords
+	insert into AccountRecords (AID, rDate, rType, rAmount)
+	values (AIDtoBill, current_date, 'B', -billAmount);
+	
+	--(c) change bill to true for bIsPaid in Bills
+	update Bills
+	set bIsPaid = true
+	where BID = iBID;
+	
+end;
+$$
+language 'plpgsql';
