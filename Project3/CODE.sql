@@ -201,8 +201,10 @@ begin
 			update Bills
 			set bIsPaid = true
 			where BID = iBID;
-		else
+		elsif billAmount > acntAmount THEN
 			raise exception 'Not enough money on account';
+		else
+			raise exception 'Account does not exist';	-- Better way to check if account exists?
 		end if;
 	else
 		raise exception 'Bill has already been paid';
