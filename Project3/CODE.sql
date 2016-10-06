@@ -167,7 +167,6 @@ $$
 declare
 	billPID int;
 	AIDtoBill int;
-	numOfAID int;
 	acntAmount int;
 	billAmount int;
 begin
