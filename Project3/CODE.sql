@@ -178,8 +178,8 @@ begin
 		select AID, SUM(aBalance + aOver) as balance from Accounts where PID = billPID group by AID) as ACT);
 	
 	-- which account to bill, since it doesn't matter which one in case of more than 1 with same amount we just take the first one
-	AIDtoBILL := (select AID from Accounts where PID = 103 group by AID having SUM(abalance+aover) = (select MAX(ACT.balance) from (
-		select AID, SUM(aBalance + aOver) as balance from Accounts where PID = 103 group by AID) as ACT) FETCH FIRST 1 ROW ONLY);
+	AIDtoBILL := (select AID from Accounts where PID = billPID group by AID having SUM(abalance+aover) = (select MAX(ACT.balance) from (
+		select AID, SUM(aBalance + aOver) as balance from Accounts where PID = billPID group by AID) as ACT) FETCH FIRST 1 ROW ONLY);
 
 	-- the money amount on a bill
 	billAmount := (select bAmount from Bills where BID = iBID);
