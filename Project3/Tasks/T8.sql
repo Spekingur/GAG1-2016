@@ -1,3 +1,11 @@
+/* Task 8 
+ * Function PayOneBill takes in iBID as bill ID of bill to be paid. The function pays the bill.
+ * Payment should come from the account with the highest balance (amount + overdraft) of a person's account.
+ * If 2+ accounts with same amount + overdraft either can be chosen.
+ * Uses trigger #5. If insufficient funds in a single account to pay the bill the operation/transaction should
+ * be aborted. No return value.
+ */
+
 create or replace function PayOneBill (IN iBID int)
 returns void
 as
