@@ -1,19 +1,11 @@
-/* Task 8 
- * Function PayOneBill takes in iBID as bill ID of bill to be paid. The function pays the bill.
- * Payment should come from the account with the highest balance (amount + overdraft) of a person's account.
- * If 2+ accounts with same amount + overdraft either can be chosen.
- * Uses trigger #5. If insufficient funds in a single account to pay the bill the operation/transaction should
- * be aborted. No return value.
- */
-
 create or replace function PayOneBill (IN iBID int)
 returns void
 as
 $$
 declare
-  	billPID int;
+	billPID int;
 	AIDtoBill int;
-	--numOfAID int;
+	numOfAID int;
 	acntAmount int;
 	billAmount int;
 begin
@@ -24,18 +16,18 @@ begin
 	-- if so then 
 	billPID := (select PID from Bills where BID = iBID);	-- Person ID to find person's accounts
 	
-	acntAmount := select MAX(ACT.balance) from (
-			select AID, SUM(aBalance + aOver) as balance 
-			from Accounts 
-			where PID = billPID 
-			group by AID) as ACT;	 -- finding the highest amount an person's account has
+	acntAmount := (select MAX(ACT.balance) from (
+		select AID, SUM(aBalance + aOver) as balance from Accounts where PID = billPID group by AID) as ACT);	-- finding the MAX amount on an account
 	
-	AIDtoBill := (select AID, SUM(aBalance + aOver) as balance from Accounts where PID = billPID);	-- does not work
-	
-	billAmount := (select bAmount from Bills where BID = iBID);
+	--AIDtoBill := (select AID, SUM(aBalance + aOver) as balance from Accounts where PID = billPID);
+	AIDtoBILL := (select AID from Accounts where PID = 103 group by AID having SUM(abalance+aover) = (select MAX(ACT.balance) from (
+		select AID, SUM(aBalance + aOver) as balance from Accounts where PID = 103 group by AID) as ACT) FETCH FIRST 1 ROW ONLY);
+
+	billAmount := (select bAmount from Bills where BID = iBID);	-- the money amount on a bill
 	--numOfAID := (select count(*) from billNUM);
-	
+
 	if billAmount <= acntAmount THEN
+	
 		--(b) take money off account through AccountRecords
 		insert into AccountRecords (AID, rDate, rType, rAmount)
 		values (AIDtoBill, current_date, 'B', -billAmount);
@@ -46,7 +38,8 @@ begin
 		where BID = iBID;
 	else
 		raise exception 'Not enough money on account';
-	end if;	
+	end if;
+	
 end;
 $$
 language 'plpgsql';
