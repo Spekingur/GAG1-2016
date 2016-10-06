@@ -160,6 +160,49 @@ $$
 language 'plpgsql';
 
 /* Task 8 */
+create or replace function PayOneBill (IN iBID int)
+returns void
+as
+$$
+declare
+	billPID int;
+	AIDtoBill int;
+	numOfAID int;
+	acntAmount int;
+	billAmount int;
+begin
+	-- Person ID to find person's accounts
+	billPID := (select PID from Bills where BID = iBID);
+	
+	-- finding the MAX amount on an account
+	acntAmount := (select MAX(ACT.balance) from (
+		select AID, SUM(aBalance + aOver) as balance from Accounts where PID = billPID group by AID) as ACT);
+	
+	-- which account to bill, since it doesn't matter which one in case of more than 1 with same amount we just take the first one
+	AIDtoBILL := (select AID from Accounts where PID = 103 group by AID having SUM(abalance+aover) = (select MAX(ACT.balance) from (
+		select AID, SUM(aBalance + aOver) as balance from Accounts where PID = 103 group by AID) as ACT) FETCH FIRST 1 ROW ONLY);
+
+	-- the money amount on a bill
+	billAmount := (select bAmount from Bills where BID = iBID);
+
+	-- making sure only to try payment when account has enough money for bill (tvíverknaður út af trigger úr no 5?)
+	if billAmount <= acntAmount THEN
+	
+		-- take money off account through AccountRecords
+		insert into AccountRecords (AID, rDate, rType, rAmount)
+		values (AIDtoBill, current_date, 'B', -billAmount);
+	
+		-- change bill to true for bIsPaid in Bills
+		update Bills
+		set bIsPaid = true
+		where BID = iBID;
+	else
+		raise exception 'Not enough money on account';
+	end if;
+	
+end;
+$$
+language 'plpgsql';
 
 /* Task 9 */
 create or replace function Transfer (
