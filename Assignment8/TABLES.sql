@@ -1,57 +1,86 @@
-/**********************************************
- * Assignment 8: Database Design
- * by
- * Hreiðar Ólafur Arnarsson, hreidara14@ru.is
- * 
+/******* Assignment 8: Database Design ********* 
+ * Hreiðar Ólafur Arnarsson - hreidara14@ru.is
+ * Maciej Sierzputowski - maciej15@ru.is
  **********************************************/
 
 /* TASK 1 */
-/* Information about all the players in the club:
- * - ID
- * - name
- * - gender
- * - salary
- * - biography
- */
+CREATE TABLE Players (
+	PID 		SERIAL PRIMARY KEY,
+	pName 		VARCHAR(50),
+	pGender 	CHAR(1),
+	pSalary 	INTEGER,
+	pBiography 	TEXT
+);
  
 /* TASK 2 */
-/* Information about coaches:
- * - ID
- * - name
- * - salary
- * - name of coaching degree
- * - date of issue for coaching degree
- * Coach can train more than on team. Each team can have more than on coach.
- * Salary of coaches is registered specifically for each team trained.
- */
- 
+CREATE TABLE Coaches (
+	CID		SERIAL PRIMARY KEY,
+	cName 		VARCHAR(50),
+	cSalary 	INTEGER,
+	cDegree 	VARCHAR(50),
+	cDegreeDate 	DATE
+);
+
 /* TASK 3 */
-/* Information about teams:
- * - Team nickname (unique)
- * - gender of players
- * - year of foundation
- * Each player can only be registered for one team. Each team has many players.
- * Team is always registered for some division.
- */
+CREATE TABLE Teams (
+	TID		SERIAL PRIMARY KEY,
+	tNickname 	VARCHAR(50) UNIQUE NOT NULL,
+	tGender 	CHAR(1),
+	tFoundation 	DATE
+);
 
 /* TASK 4 */
-/* Information about divisions:
- * - name of the division
- * - gender of teams
- * - sponsors
- * Each division has many teams but each team can only play in one division.
- * A single women's division can have the same name as a single men's division.
- * But divisions of same gender have unique names.
- */
+CREATE TABLE Divisions (
+	dName 		VARCHAR(50),
+	dGender 	CHAR(1),
+	dSponsor 	VARCHAR(50),
+	PRIMARY KEY (dName, dGender)
+);
 
 /* TASK 5 */
-/* Information about matches:
- * - the team
- * - date
- * - time
- * - venue
- * - opponent
- * - score
- * Each team can only play one match at the same date and time.
- */
+CREATE TABLE Matches (
+	homeTID		INTEGER,
+	awayTID		INTEGER,
+	mDate		DATE,
+	mTime		TIME,
+	mVenue		VARCHAR(50),
+	homeScore	INTEGER,
+	awayScore	INTEGER
+ PRIMARY KEY (homeTID, awayTID, mDate, mTime)
+);
  
+ /* RELATION TABLES */
+ 
+ /* Relation between Coaches and Teams */
+ CREATE TABLE Trains (
+	CID		INTEGER,
+	TID		INTEGER,
+	salary		INTEGER,
+	PRIMARY KEY (CID, TID),
+	FOREIGN KEY (CID) REFERENCES Coaches,
+	FOREIGN KEY (TID) REFERENCES Teams
+);
+
+/* Relation between Players and Teams */
+/* Technically possible to have this as column in Players table */
+CREATE TABLE PartOf (
+	PID		INTEGER,
+	TID		INTEGER,
+	PRIMARY KEY (PID),
+	FOREIGN KEY (PID) REFERENCES Players,
+	FOREIGN KEY (TID) REFERENCES Teams
+);
+
+/* Relation between Teams and Divisions */
+CREATE TABLE PlaysIn (
+	TID		INTEGER,
+	dName 		VARCHAR(50),
+	dGender 	CHAR(1),
+	PRIMARY KEY (TID),
+	FOREIGN KEY (TID) REFERENCES Teams,
+	FOREIGN KEY (dName, dGender) REFERENCES Divisions
+);
+
+/* Relation between Teams and Matches */
+CREATE TABLE CompetesIn (
+);
