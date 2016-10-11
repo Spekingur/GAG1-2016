@@ -83,4 +83,9 @@ CREATE TABLE PlaysIn (
 
 /* Relation between Teams and Matches */
 CREATE TABLE CompetesIn (
+	TID		INTEGER,
+	homeTID		INTEGER,
+	PRIMARY KEY (TID, homeTID),
+	FOREIGN KEY (TID) REFERENCES Teams,
+	FOREIGN KEY (homeTID) REFERENCES Matches
 );
