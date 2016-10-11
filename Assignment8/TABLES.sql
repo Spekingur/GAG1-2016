@@ -45,8 +45,8 @@ CREATE TABLE Matches (
 	mTime		TIME,
 	mVenue		VARCHAR(50),
 	homeScore	INTEGER,
-	awayScore	INTEGER
- PRIMARY KEY (homeTID, awayTID, mDate, mTime)
+	awayScore	INTEGER,
+ 	PRIMARY KEY (homeTID, awayTID, mDate, mTime)
 );
  
  /* RELATION TABLES */
