@@ -1,0 +1,177 @@
+/* Created by
+ * Maciej Sierzputowski, maciej15@ru.is
+ * Hreidar Olafur Arnarsson, hreidara14@ru.is
+ * Date: 20-10-2016
+ */ 
+
+/* 
+DROP TABLE IF EXISTS People;
+DROP TABLE IF EXISTS Linkings;
+DROP TABLE IF EXISTS isLinked;
+DROP TABLE IF EXISTS Member;
+DROP TABLE IF EXISTS Enemy;
+DROP TABLE IF EXISTS Weakness;
+DROP TABLE IF EXISTS hasWeakness;
+DROP TABLE IF EXISTS Children; 
+DROP TABLE IF EXISTS isChild;
+DROP TABLE IF EXISTS Committee;
+DROP TABLE IF EXISTS InCommittee;
+DROP TABLE IF EXISTS Role;
+DROP TABLE IF EXISTS hasRole;
+DROP TABLE IF EXISTS Sponsor;
+DROP TABLE IF EXISTS Sponsorship;
+DROP TABLE IF EXISTS Review;
+*/
+
+/* Creating People table */
+CREATE TABLE People (
+	PID INT,
+	name VARCHAR(50),
+	address VARCHAR(50),
+	phoneNumber INT,
+	birthDate DATE,
+	deathDate DATE DEFAULT NULL,
+	PRIMARY KEY (PID)
+);
+
+/* Creating Linkings table */
+CREATE TABLE Linkings (
+	LID INT,
+	name VARCHAR(50),
+	type VARCHAR(50),
+	description TEXT,
+	PRIMARY KEY (LID)
+);
+
+/* Creating Linkings-People relation table */
+CREATE TABLE isLinked (
+	PID INT,
+	LID INT,
+	PRIMARY KEY (PID, LID),
+	FOREIGN KEY (PID) REFERENCES People (PID),
+	FOREIGN KEY (LID) REFERENCES Linkings (LID)
+);
+
+/* Creating Member table */
+CREATE TABLE Member (
+	PID INT,
+	joinDate DATE,
+	PRIMARY KEY (PID),
+	FOREIGN KEY (PID) REFERENCES People (PID)
+);
+
+/* Creating Enemy table */
+CREATE TABLE Enemy (
+	PID INT,
+	PRIMARY KEY (PID),
+	FOREIGN KEY (PID) REFERENCES People(PID)
+);
+
+/* Creating Weakness table */
+CREATE TABLE Weakness (
+	name VARCHAR(50),
+	description TEXT,
+	PRIMARY KEY (name)
+);
+
+/* Creating Enemy-Weakness relation */
+CREATE TABLE hasWeakness (
+	enemyID INT,
+	weaknessName VARCHAR(50),
+	usage TEXT,
+	PRIMARY KEY (enemyID, weaknessName),
+	FOREIGN KEY (enemyID) REFERENCES Enemy(PID),
+	FOREIGN KEY (weaknessName) REFERENCES Weakness(name)
+);
+
+/* Creating Children table */
+CREATE TABLE Children (
+	name VARCHAR(50),
+	phoneNumber INTEGER,
+	birthDate DATE,
+	willingness INT NOT NULL,
+	PRIMARY KEY (name)
+);
+
+/*  Creating Children-Member relation table */
+CREATE TABLE isChild (
+	PID INT,
+	childName VARCHAR(50),
+	PRIMARY KEY (PID, childName),
+	FOREIGN KEY (PID) REFERENCES Member (PID),
+	FOREIGN KEY (childName) REFERENCES Children (name)
+);
+
+/* Creating Committee table */
+CREATE TABLE Committee (
+	name VARCHAR(100),
+	description TEXT,
+	establishDate DATE,
+	PRIMARY KEY (name)
+);
+
+/* Creating Member-Committee relation table */
+CREATE TABLE InCommittee (
+	memberID INT,
+	committeeName VARCHAR(100),
+	role VARCHAR(50),
+	startDate DATE,
+	endDate DATE,
+	PRIMARY KEY (memberID, committeeName),
+	FOREIGN KEY (memberID) REFERENCES Member(PID),
+	FOREIGN KEY (committeeName) REFERENCES Committee(name)
+);
+
+/* Creating Role table */
+CREATE TABLE Role (
+	name VARCHAR(100),
+	PRIMARY KEY (name)
+);
+
+/* Creating Member-Role relation table */
+CREATE TABLE hasRole (
+	memberID INT,
+	roleName VARCHAR(100),
+	startDate DATE,
+	endDate DATE,
+	salary INT,
+	PRIMARY KEY (memberID, roleName),
+	FOREIGN KEY (memberID) REFERENCES Member(PID),
+	FOREIGN KEY (roleName) REFERENCES Role(name)
+);
+
+/* Creating Sponsor table */
+CREATE TABLE Sponsor (
+	SID INT,
+	name VARCHAR(50),
+	address VARCHAR(50),
+	industry VARCHAR(50),
+	PRIMARY KEY (SID)
+);
+
+/* Creating Sponsor-Role relation table */
+CREATE TABLE Sponsorship (
+	SID INT,
+	memberID INT,
+	roleName VARCHAR(100),
+	sponsorDate DATE,
+	amount INT,
+	payback	TEXT,
+	PRIMARY KEY (SID, memberID, roleName,  sponsorDate),
+	FOREIGN KEY (SID) REFERENCES Sponsor (SID),
+	FOREIGN KEY (memberID, roleName) REFERENCES hasRole (memberID, roleName)
+);
+
+/* Creating Review relation table */
+CREATE TABLE Review (
+	reviewerID INT,
+	sponsedMemberID INT,
+	roleName VARCHAR(100),
+	sponsorID INT,
+	sponsorDate DATE,
+	reviewDate DATE,
+	grade INT DEFAULT NULL,
+	PRIMARY KEY (reviewerID, sponsorID, sponsedMemberID, roleName, sponsorDate),
+	FOREIGN KEY (reviewerID) REFERENCES Member(PID),
+	FOREIGN KEY (sponsorID, sponsedMemberID, roleName, sponsorDate) REFERENCES Sponsorship(SID, memberID, roleName, sponsorDate)
+);
