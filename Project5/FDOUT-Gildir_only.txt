@@ -1,0 +1,36 @@
+Persons: ID-->PN|Gildir
+Persons: ID-->DID|Gildir
+Persons: ID-->DN|Gildir
+Persons: ID-->SSN|Gildir
+Persons: ID-->Z|Gildir
+Persons: ID-->T|Gildir
+Persons: DID-->DN|Gildir
+Persons: SSN-->ID|Gildir
+Persons: SSN-->PN|Gildir
+Persons: SSN-->DID|Gildir
+Persons: SSN-->DN|Gildir
+Persons: SSN-->Z|Gildir
+Persons: SSN-->T|Gildir
+Persons: Z-->T|Gildir
+
+Boats: Z-->BL|Gildir
+Boats: Z-->T|Gildir
+
+Projects: ID-->PID|Gildir
+Projects: ID-->DID|Gildir
+Projects: ID-->DN|Gildir
+Projects: ID-->PN|Gildir
+Projects: ID-->DM|Gildir
+Projects: PID-->DID|Gildir
+Projects: PID-->DN|Gildir
+Projects: PID-->PN|Gildir
+Projects: PID-->DM|Gildir
+Projects: DID-->DN|Gildir
+Projects: DID-->DM|Gildir
+Projects: DM-->DID|Gildir
+Projects: DM-->DN|Gildir
+
+Courses: TID-->TN|Gildir
+Courses: SID-->SN|Gildir
+Courses: SID-->SY|Gildir
+Courses: TN-->TID|Gildir
