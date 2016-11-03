@@ -38,7 +38,7 @@ public class MultiQueries {
 								
 								query = "SELECT '" + tableName + ": " + columns[i] + "-->>" + columns[j] + "; "
 										+ columns[i] + "-->>" + columns[k] + "; " + columns[i] + "-->>" + columns[l] + "' AS MVD, "
-										+ "CASE WHEN COUNT(*) = 0, THEN 'Gildir' ELSE 'Gildir ekki' END AS VALIDITY" + System.lineSeparator()
+										+ "CASE WHEN COUNT(*) = 0 THEN 'Gildir' ELSE 'Gildir ekki' END AS VALIDITY" + System.lineSeparator()
 										+ "FROM(" + System.lineSeparator()
 										+ " SELECT " + columns[i] + System.lineSeparator()
 										+ "  FROM " + tableName + System.lineSeparator()
