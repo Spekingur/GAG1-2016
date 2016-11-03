@@ -1,0 +1,432 @@
+fd|validity
+Persons: ID-->PN|Gildir
+(1 row)
+fd|validity
+Persons: ID-->DID|Gildir
+(1 row)
+fd|validity
+Persons: ID-->DN|Gildir
+(1 row)
+fd|validity
+Persons: ID-->SSN|Gildir
+(1 row)
+fd|validity
+Persons: ID-->Z|Gildir
+(1 row)
+fd|validity
+Persons: ID-->T|Gildir
+(1 row)
+fd|validity
+Persons: PN-->ID|Gildir ekki
+(1 row)
+fd|validity
+Persons: PN-->DID|Gildir ekki
+(1 row)
+fd|validity
+Persons: PN-->DN|Gildir ekki
+(1 row)
+fd|validity
+Persons: PN-->SSN|Gildir ekki
+(1 row)
+fd|validity
+Persons: PN-->Z|Gildir ekki
+(1 row)
+fd|validity
+Persons: PN-->T|Gildir ekki
+(1 row)
+fd|validity
+Persons: DID-->ID|Gildir ekki
+(1 row)
+fd|validity
+Persons: DID-->PN|Gildir ekki
+(1 row)
+fd|validity
+Persons: DID-->DN|Gildir
+(1 row)
+fd|validity
+Persons: DID-->SSN|Gildir ekki
+(1 row)
+fd|validity
+Persons: DID-->Z|Gildir ekki
+(1 row)
+fd|validity
+Persons: DID-->T|Gildir ekki
+(1 row)
+fd|validity
+Persons: DN-->ID|Gildir ekki
+(1 row)
+fd|validity
+Persons: DN-->PN|Gildir ekki
+(1 row)
+fd|validity
+Persons: DN-->DID|Gildir ekki
+(1 row)
+fd|validity
+Persons: DN-->SSN|Gildir ekki
+(1 row)
+fd|validity
+Persons: DN-->Z|Gildir ekki
+(1 row)
+fd|validity
+Persons: DN-->T|Gildir ekki
+(1 row)
+fd|validity
+Persons: SSN-->ID|Gildir
+(1 row)
+fd|validity
+Persons: SSN-->PN|Gildir
+(1 row)
+fd|validity
+Persons: SSN-->DID|Gildir
+(1 row)
+fd|validity
+Persons: SSN-->DN|Gildir
+(1 row)
+fd|validity
+Persons: SSN-->Z|Gildir
+(1 row)
+fd|validity
+Persons: SSN-->T|Gildir
+(1 row)
+fd|validity
+Persons: Z-->ID|Gildir ekki
+(1 row)
+fd|validity
+Persons: Z-->PN|Gildir ekki
+(1 row)
+fd|validity
+Persons: Z-->DID|Gildir ekki
+(1 row)
+fd|validity
+Persons: Z-->DN|Gildir ekki
+(1 row)
+fd|validity
+Persons: Z-->SSN|Gildir ekki
+(1 row)
+fd|validity
+Persons: Z-->T|Gildir
+(1 row)
+fd|validity
+Persons: T-->ID|Gildir ekki
+(1 row)
+fd|validity
+Persons: T-->PN|Gildir ekki
+(1 row)
+fd|validity
+Persons: T-->DID|Gildir ekki
+(1 row)
+fd|validity
+Persons: T-->DN|Gildir ekki
+(1 row)
+fd|validity
+Persons: T-->SSN|Gildir ekki
+(1 row)
+fd|validity
+Persons: T-->Z|Gildir ekki
+(1 row)
+fd|validity
+Boats: BL-->BNo|Gildir ekki
+(1 row)
+fd|validity
+Boats: BL-->Z|Gildir ekki
+(1 row)
+fd|validity
+Boats: BL-->T|Gildir ekki
+(1 row)
+fd|validity
+Boats: BL-->BN|Gildir ekki
+(1 row)
+fd|validity
+Boats: BL-->SSN|Gildir ekki
+(1 row)
+fd|validity
+Boats: BNo-->BL|Gildir ekki
+(1 row)
+fd|validity
+Boats: BNo-->Z|Gildir ekki
+(1 row)
+fd|validity
+Boats: BNo-->T|Gildir ekki
+(1 row)
+fd|validity
+Boats: BNo-->BN|Gildir ekki
+(1 row)
+fd|validity
+Boats: BNo-->SSN|Gildir ekki
+(1 row)
+fd|validity
+Boats: Z-->BL|Gildir
+(1 row)
+fd|validity
+Boats: Z-->BNo|Gildir ekki
+(1 row)
+fd|validity
+Boats: Z-->T|Gildir
+(1 row)
+fd|validity
+Boats: Z-->BN|Gildir ekki
+(1 row)
+fd|validity
+Boats: Z-->SSN|Gildir ekki
+(1 row)
+fd|validity
+Boats: T-->BL|Gildir ekki
+(1 row)
+fd|validity
+Boats: T-->BNo|Gildir ekki
+(1 row)
+fd|validity
+Boats: T-->Z|Gildir ekki
+(1 row)
+fd|validity
+Boats: T-->BN|Gildir ekki
+(1 row)
+fd|validity
+Boats: T-->SSN|Gildir ekki
+(1 row)
+fd|validity
+Boats: BN-->BL|Gildir ekki
+(1 row)
+fd|validity
+Boats: BN-->BNo|Gildir ekki
+(1 row)
+fd|validity
+Boats: BN-->Z|Gildir ekki
+(1 row)
+fd|validity
+Boats: BN-->T|Gildir ekki
+(1 row)
+fd|validity
+Boats: BN-->SSN|Gildir ekki
+(1 row)
+fd|validity
+Boats: SSN-->BL|Gildir ekki
+(1 row)
+fd|validity
+Boats: SSN-->BNo|Gildir ekki
+(1 row)
+fd|validity
+Boats: SSN-->Z|Gildir ekki
+(1 row)
+fd|validity
+Boats: SSN-->T|Gildir ekki
+(1 row)
+fd|validity
+Boats: SSN-->BN|Gildir ekki
+(1 row)
+fd|validity
+Projects: ID-->PID|Gildir
+(1 row)
+fd|validity
+Projects: ID-->DID|Gildir
+(1 row)
+fd|validity
+Projects: ID-->DN|Gildir
+(1 row)
+fd|validity
+Projects: ID-->PN|Gildir
+(1 row)
+fd|validity
+Projects: ID-->DM|Gildir
+(1 row)
+fd|validity
+Projects: PID-->ID|Gildir ekki
+(1 row)
+fd|validity
+Projects: PID-->DID|Gildir
+(1 row)
+fd|validity
+Projects: PID-->DN|Gildir
+(1 row)
+fd|validity
+Projects: PID-->PN|Gildir
+(1 row)
+fd|validity
+Projects: PID-->DM|Gildir
+(1 row)
+fd|validity
+Projects: DID-->ID|Gildir ekki
+(1 row)
+fd|validity
+Projects: DID-->PID|Gildir ekki
+(1 row)
+fd|validity
+Projects: DID-->DN|Gildir
+(1 row)
+fd|validity
+Projects: DID-->PN|Gildir ekki
+(1 row)
+fd|validity
+Projects: DID-->DM|Gildir
+(1 row)
+fd|validity
+Projects: DN-->ID|Gildir ekki
+(1 row)
+fd|validity
+Projects: DN-->PID|Gildir ekki
+(1 row)
+fd|validity
+Projects: DN-->DID|Gildir ekki
+(1 row)
+fd|validity
+Projects: DN-->PN|Gildir ekki
+(1 row)
+fd|validity
+Projects: DN-->DM|Gildir ekki
+(1 row)
+fd|validity
+Projects: PN-->ID|Gildir ekki
+(1 row)
+fd|validity
+Projects: PN-->PID|Gildir ekki
+(1 row)
+fd|validity
+Projects: PN-->DID|Gildir ekki
+(1 row)
+fd|validity
+Projects: PN-->DN|Gildir ekki
+(1 row)
+fd|validity
+Projects: PN-->DM|Gildir ekki
+(1 row)
+fd|validity
+Projects: DM-->ID|Gildir ekki
+(1 row)
+fd|validity
+Projects: DM-->PID|Gildir ekki
+(1 row)
+fd|validity
+Projects: DM-->DID|Gildir
+(1 row)
+fd|validity
+Projects: DM-->DN|Gildir
+(1 row)
+fd|validity
+Projects: DM-->PN|Gildir ekki
+(1 row)
+fd|validity
+Courses: CID-->TID|Gildir ekki
+(1 row)
+fd|validity
+Courses: CID-->BID|Gildir ekki
+(1 row)
+fd|validity
+Courses: CID-->SID|Gildir ekki
+(1 row)
+fd|validity
+Courses: CID-->TN|Gildir ekki
+(1 row)
+fd|validity
+Courses: CID-->SN|Gildir ekki
+(1 row)
+fd|validity
+Courses: CID-->SY|Gildir ekki
+(1 row)
+fd|validity
+Courses: TID-->CID|Gildir ekki
+(1 row)
+fd|validity
+Courses: TID-->BID|Gildir ekki
+(1 row)
+fd|validity
+Courses: TID-->SID|Gildir ekki
+(1 row)
+fd|validity
+Courses: TID-->TN|Gildir
+(1 row)
+fd|validity
+Courses: TID-->SN|Gildir ekki
+(1 row)
+fd|validity
+Courses: TID-->SY|Gildir ekki
+(1 row)
+fd|validity
+Courses: BID-->CID|Gildir ekki
+(1 row)
+fd|validity
+Courses: BID-->TID|Gildir ekki
+(1 row)
+fd|validity
+Courses: BID-->SID|Gildir ekki
+(1 row)
+fd|validity
+Courses: BID-->TN|Gildir ekki
+(1 row)
+fd|validity
+Courses: BID-->SN|Gildir ekki
+(1 row)
+fd|validity
+Courses: BID-->SY|Gildir ekki
+(1 row)
+fd|validity
+Courses: SID-->CID|Gildir ekki
+(1 row)
+fd|validity
+Courses: SID-->TID|Gildir ekki
+(1 row)
+fd|validity
+Courses: SID-->BID|Gildir ekki
+(1 row)
+fd|validity
+Courses: SID-->TN|Gildir ekki
+(1 row)
+fd|validity
+Courses: SID-->SN|Gildir
+(1 row)
+fd|validity
+Courses: SID-->SY|Gildir
+(1 row)
+fd|validity
+Courses: TN-->CID|Gildir ekki
+(1 row)
+fd|validity
+Courses: TN-->TID|Gildir
+(1 row)
+fd|validity
+Courses: TN-->BID|Gildir ekki
+(1 row)
+fd|validity
+Courses: TN-->SID|Gildir ekki
+(1 row)
+fd|validity
+Courses: TN-->SN|Gildir ekki
+(1 row)
+fd|validity
+Courses: TN-->SY|Gildir ekki
+(1 row)
+fd|validity
+Courses: SN-->CID|Gildir ekki
+(1 row)
+fd|validity
+Courses: SN-->TID|Gildir ekki
+(1 row)
+fd|validity
+Courses: SN-->BID|Gildir ekki
+(1 row)
+fd|validity
+Courses: SN-->SID|Gildir ekki
+(1 row)
+fd|validity
+Courses: SN-->TN|Gildir ekki
+(1 row)
+fd|validity
+Courses: SN-->SY|Gildir ekki
+(1 row)
+fd|validity
+Courses: SY-->CID|Gildir ekki
+(1 row)
+fd|validity
+Courses: SY-->TID|Gildir ekki
+(1 row)
+fd|validity
+Courses: SY-->BID|Gildir ekki
+(1 row)
+fd|validity
+Courses: SY-->SID|Gildir ekki
+(1 row)
+fd|validity
+Courses: SY-->TN|Gildir ekki
+(1 row)
+fd|validity
+Courses: SY-->SN|Gildir ekki
+(1 row)
