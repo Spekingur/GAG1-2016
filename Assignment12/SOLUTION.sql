@@ -43,6 +43,10 @@
 	ON Customers, Records 
 	FROM stakeholder;
 	
+	REVOKE SELECT 								--Revokes privileges from user 'Manager' to see the Customers and Records views
+	ON Customers, Records 
+	FROM manager;
+	
 	REVOKE ALL PRIVILEGES 							--Revokes privileges from user 'Manager' to modify the tables
 	ON ALL TABLES 
 	IN SCHEMA PUBLIC 
