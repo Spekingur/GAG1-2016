@@ -1,0 +1,70 @@
+/* *******************************************
+ * ****** ASSIGNMENT 12: ADMINISTRATION ******
+ * *******************************************
+ * Hreiðar Ólafur Arnarsson, hreidara14@ru.is
+ * ******************************************* */
+
+/* Creating the user 'stakeholder', we use this rather than CREATE ROLE since LOGIN is default
+ * We then declare what the password is with the WITH PASSWORD and we use '12345' as the password
+ * (because Spaceballs is a great movie) */
+CREATE USER Stakeholder WITH PASSWORD '12345';
+
+/* The CREATE ROLE syntax */
+// CREATE ROLE stakeholder LOGIN WITH PASSWORD '12345'; 
+
+/* A test to see if we as the user 'stakeholder' can use the Customers and Records views */
+SELECT Customers;
+SELECT Records;
+
+/* Grant access to those views to the user stakeholder */
+GRANT SELECT ON Customers, Records TO stakeholder;
+
+/* Another test to see if the user 'stakeholder' can use the Customer and Records views */
+SELECT Customers;
+SELECT Records;
+
+/* Testing to insert into the People table as the user 'stakeholder' */
+INSERT INTO People VALUES ('Thor Odinsson', 'M', '2.10');
+
+/* Creating the user 'manager' */
+CREATE USER manager WITH PASSWORD '54321';
+
+/* Giving the user 'manager' full access to all the tables in the public schema
+ * These would be the tables People, Accounts, AccountRecords and Bills */
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA PUBLIC TO manager;
+
+// test SELECT on People, Accounts, AccountRecords, Bills
+// test INSERT on People, Accounts, AccountRecords, Bills
+// test DELETE on People, Accounts, AccountRecords, Bills
+
+/* Try NewCustomer as the user 'manager' */
+SELECT NewCustomer(100, 'Roy Rodgers', 'M', 1.80);
+
+/* Give user 'manager' access to run or execute functions */
+GRANT EXECUTE ON FUNCTION NewCustomer(m_PID, m_pname, m_pgender, m_pheight) TO manager;
+
+/* Try NewCustomer function again as user 'manager' */
+SELECT NewCustomer(100, 'Roy Rodgers', 'M', 1.80);
+
+/* Revoking access to execute NewCustomer function for user 'manager' 
+ * and testing that the user can indeed not execute the function */
+REVOKE EXECUTE ON FUNCTION NewCustomer FROM manager;
+SELECT NewCustomer(101, 'Tina Turner', 'F', 1.60);
+
+/* Revoking all access to all the tables in the public schema along with
+ * testing that access has been revoked */
+REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA PUBLIC FROM manager;
+
+// test SELECT on People, Accounts, AccountRecords, Bills
+// test INSERT on People, Accounts, AccountRecords, Bills
+// test DELETE on People, Accounts, AccountRecords, Bills
+
+/* Revoking access to the views Customers and Records for the user 'stakeholder'
+ * along with testing to confirm that the access has been revoked */
+REVOKE SELECT ON Customers, Records FROM stakeholder;
+SELECT Customers;
+SELECT Records;
+
+/* Removing the users */
+DROP USER IF EXISTS manager;
+DROP USER IF EXISTS stakeholder;
