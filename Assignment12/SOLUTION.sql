@@ -25,8 +25,8 @@
 	
 5.	CREATE USER Manager PASSWORD '123';					--Creates an user account named 'Manager' with a password '123'
 
-	GRANT ALL PRIVILEGES 							--Grants the user 'Manager' privileges to use SELECT, INSERT and DELETE on all
-	ON ALL TABLES 								--tables in the A_12 database
+	GRANT UPDATE 								--Grants the user 'Manager' privileges to UPDATE all tables in the a12 database
+	ON ALL TABLES 													
 	IN SCHEMA PUBLIC 
 	TO manager;
 	
