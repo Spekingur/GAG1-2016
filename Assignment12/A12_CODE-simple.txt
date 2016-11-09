@@ -1,0 +1,42 @@
+/* *******************************************
+ * ****** ASSIGNMENT 12: ADMINISTRATION ******
+ * *******************************************
+ * Hreiðar Ólafur Arnarsson, hreidara14@ru.is
+ * ******************************************* */
+
+/* Creating the user 'stakeholder', we use this rather than CREATE ROLE since LOGIN is default
+ * We then declare what the password is with the WITH PASSWORD and we use '12345' as the password
+ * (because Spaceballs is a great movie) */
+CREATE USER stakeholder WITH PASSWORD '12345';
+
+/* The CREATE ROLE syntax */
+-- CREATE ROLE stakeholder LOGIN WITH PASSWORD '12345'; 
+
+/* Grant access to those views to the user 'stakeholder' */
+GRANT SELECT ON Customers, Records TO stakeholder;
+
+/* Creating the user 'manager' */
+CREATE USER manager WITH PASSWORD '54321';
+
+/* Giving the user 'manager' full access to all the tables in the public schema
+ * because assignment description says "This means a grant statement to give all 
+ * privileges for all tables in the schema." 
+ * Note that this does however give the user a lot of access AND also note that
+ * default privileges allow user to create views even if we grant the user no access. */
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA PUBLIC TO manager;
+
+/* Give user 'manager' access to run or execute functions */
+GRANT EXECUTE ON FUNCTION NewCustomer(m_PID, m_pname, m_pgender, m_pheight) TO manager;
+
+/* Revoking access to execute NewCustomer function for user 'manager' */
+REVOKE EXECUTE ON FUNCTION NewCustomer FROM manager;
+
+/* Revoking all access to all the tables in the public schema along with */
+REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA PUBLIC FROM manager;
+
+/* Revoking access to the views Customers and Records for the user 'stakeholder' */
+REVOKE SELECT ON Customers, Records FROM stakeholder;
+
+/* Removing the users */
+DROP USER IF EXISTS manager;
+DROP USER IF EXISTS stakeholder;
